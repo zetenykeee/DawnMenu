@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.KeyBinding;
+import net.minecraft.client.util.InputUtil;
 import net.minecraft.text.Text;
 import org.lwjgl.glfw.GLFW;
 
@@ -13,18 +14,20 @@ import java.util.List;
 
 public final class DawnMenuClient implements ClientModInitializer {
     private static final List<Waypoint> WAYPOINTS = new ArrayList<>();
-    private static KeyBinding addWaypointKey;
-    private static KeyBinding listWaypointsKey;
+    private KeyBinding addWaypointKey;
+    private KeyBinding listWaypointsKey;
 
     @Override
     public void onInitializeClient() {
         addWaypointKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "key.dawnmenu.add_waypoint",
+                InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_K,
                 KeyBinding.Category.MISC
         ));
         listWaypointsKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "key.dawnmenu.list_waypoints",
+                InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_J,
                 KeyBinding.Category.MISC
         ));
