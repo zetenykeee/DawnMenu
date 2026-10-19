@@ -1,25 +1,24 @@
 # DawnMenu
 
-A small Minecraft client-side utility mod project.
+A client-side Fabric utility mod targeting Minecraft **Java Edition 26.2**.
 
-## Planned features
-- In-game menu and configurable menu key
-- Custom keybinds
-- Waypoints for locations the player chooses
-- Schematic assistance for building in single-player worlds or servers where these tools are explicitly allowed
+## Current prototype
+- Press **K** to save your current position as a personal waypoint.
+- Press **J** to list saved waypoints in chat.
+- Default keys can be changed in Minecraft's Controls settings under Miscellaneous.
 
-## Out of scope
-This project will not include X-ray, hidden-chest or other-player base finding, ESP for locating hidden player assets, or anti-cheat evasion.
-
-## Compatibility
-Target Minecraft version: **26.2** (as requested).
-The exact Fabric Loader, Fabric API, mappings, and Java versions still need to be confirmed for this Minecraft release before a build can be verified. No compiled JAR is provided yet.
+Waypoints currently stay in memory and are cleared when the game is restarted. This is an early prototype; no compiled JAR has been verified yet.
 
 ## Build
-Once the matching Fabric toolchain is configured, run:
+The repository includes a GitHub Actions workflow intended to build the JAR and upload it as a workflow artifact. Once a successful run finishes, open **Actions → Build DawnMenu → latest run → Artifacts**.
+
+For a local build with Java 25 and Gradle 9.5.1 installed, run:
 
 ```bash
-./gradlew build
+gradle build
 ```
 
-The compiled mod JAR should appear in `build/libs/`.
+The JAR should be written to `build/libs/`.
+
+## Boundaries
+This project focuses on personal waypoints and legitimate building utilities. It does not include X-ray, hidden chest/player-base finding, ESP for locating hidden player assets, or anti-cheat evasion.
