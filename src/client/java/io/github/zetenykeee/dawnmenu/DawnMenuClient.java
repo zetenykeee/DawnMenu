@@ -1,12 +1,13 @@
 package io.github.zetenykeee.dawnmenu;
 
 import com.mojang.blaze3d.platform.InputConstants;
+import org.lwjgl.glfw.GLFW;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -39,7 +40,7 @@ public final class DawnMenuClient implements ClientModInitializer {
     private final KeyMapping openMenuKey = KeyMappingHelper.registerKeyMapping(new KeyMapping(
             "key.dawnmenu.open_menu",
             InputConstants.Type.KEYSYM,
-            InputConstants.KEY_RIGHT_SHIFT,
+            GLFW.GLFW_KEY_RIGHT_SHIFT,
             category
     ));
 
@@ -54,7 +55,7 @@ public final class DawnMenuClient implements ClientModInitializer {
             }
             while (openMenuKey.consumeClick()) {
                 if (client.player != null) {
-                    client.setScreen(new DawnMenuScreen());
+                    client.gui.setScreen(new DawnMenuScreen());
                 }
             }
         });
@@ -110,18 +111,18 @@ public final class DawnMenuClient implements ClientModInitializer {
                     listWaypoints(Minecraft.getInstance()))
                     .bounds(centerX - 100, top + 26, 200, 20).build());
             addRenderableWidget(Button.builder(Component.literal("Close"), button ->
-                    Minecraft.getInstance().setScreen(null))
+                    Minecraft.getInstance().gui.setScreen(null))
                     .bounds(centerX - 100, top + 52, 200, 20).build());
         }
 
         @Override
         public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
             renderBackground(graphics, mouseX, mouseY, partialTick);
-            graphics.drawCenteredString(this.font, this.title, this.width / 2, this.height / 2 - 82, 0xFFFFFF);
+            graphics.text(this.font, this.title, this.width / 2 - this.font.width(this.title) / 2, this.height / 2 - 82, 0xFFFFFF, false);
             graphics.drawCenteredString(this.font,
                     Component.literal("Right Shift opens this menu"),
                     this.width / 2, this.height / 2 - 68, 0xB8B8B8);
-            super.render(graphics, mouseX, mouseY, partialTick);
+            super.extractRenderState(graphics, mouseX, mouseY, partialTick);
         }
     }
 
